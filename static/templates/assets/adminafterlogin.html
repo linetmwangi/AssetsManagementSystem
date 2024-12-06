@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+<style media="screen">
+.btn-circle.btn-xl {
+  width: 70px;
+  height: 70px;
+  padding: 10px 16px;
+  border-radius: 35px;
+  font-size: 24px;
+  line-height: 1.33;
+}
+
+.btn-circle {
+  width: 30px;
+  height: 30px;
+  padding: 6px 0px;
+  border-radius: 15px;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.42857;
+}
+
+.jumbotron{
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+.jumbotron h1{
+  text-align: center;
+}
+
+
+</style>
+  </head>
+  <body>
+    {% include "assets/navbaradmin.html" %}
+
+
+    <div class="jumbotron" >
+    <h1 class="display-4">Hello {{user.first_name}} !</h1>
+    <p class="lead">As you are Admin, you can add an asset , view available assets ,
+       Issue assets to staff,
+      View issued assets to staff and many more ... !
+
+    </p>
+    <hr class="my-4">
+    <p>Option Available For You</p>
+    <div class="options" style="text-align:center">
+      <a href="addasset" class="btn btn-primary btn-lg active" style="border-radius: 0%;" role="button" aria-pressed="true">Add Asset</a><br><br>
+      <a href="viewasset" class="btn btn-primary btn-lg active" style="border-radius: 0%;" role="button" aria-pressed="true">View Available Asset</a><br><br>
+      <a href="issueasset" class="btn btn-primary btn-lg active" style="border-radius: 0%;" role="button" aria-pressed="true">Issue New Asset</a><br><br>
+      <a href="viewissuedasset" class="btn btn-primary btn-lg active" style="border-radius: 0%;" role="button" aria-pressed="true">View Issued Asset</a><br><br>
+      <a href="viewstaff" class="btn btn-primary btn-lg active" style="border-radius: 0%;" role="button" aria-pressed="true">View Staff</a>
+    </div>
+
+    </div>
+
+
+    {% include "assets/footer.html" %}
+  </body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+<style media="screen">
+table.redTable {
+border: 2px solid #607d8b;
+background-color: #EEE7DB;
+width: 100%;
+text-align: center;
+border-collapse: collapse;
+}
+table.redTable td, table.redTable th {
+border: 1px solid #AAAAAA;
+padding: 3px 2px;
+}
+table.redTable tbody td {
+font-size: 13px;
+}
+table.redTable tr:nth-child(even) {
+background: #ffffff;
+}
+table.redTable thead {
+background: #607d8b;
+}
+table.redTable thead th {
+font-size: 19px;
+font-weight: bold;
+color: #FFFFFF;
+text-align: center;
+border-left: 2px solid #607d8b;
+}
+table.redTable thead th:first-child {
+border-left: none;
+}
+
+table.redTable tfoot {
+font-size: 13px;
+font-weight: bold;
+color: #FFFFFF;
+background: #607d8b;
+}
+table.redTable tfoot td {
+font-size: 13px;
+}
+table.redTable tfoot .links {
+text-align: right;
+}
+table.redTable tfoot .links a {
+display: inline-block;
+background: #FFFFFF;
+color: #607d8b;
+padding: 2px 8px;
+border-radius: 5px;
+}
+</style>
+  </head>
+  <body>
+    {% include "assets/navbaradmin.html" %}
+    <br>
+    <br>
+    <h3 class="p-3 mb-2 bg-success text-white" style='font-size: 30px;text-align:center;'>Available Assets</h3>
+{% if assets %}
+<div class="container">
+  <table class="table table-hover table-condensed table-striped table-bordered">
+    <thead>
+    <tr>
+    <th>Asset Name</th>
+    <th>Identifier</th>
+    <th>Description</th>
+    <th>Category</th>
+    <th>Actions</th>
+    </tr>
+    </thead>
+    <tfoot>
+    <tr>
+    <td colspan="5" rowspan="4">
+    <div class="links"></div>
+    </td>
+    </tr>
+    </tfoot>
+    <tbody>
+      {% for asset in assets %}
+        <tr>
+          <td>{{ asset.name }}</td>
+          <td>{{ asset.identifier }}</td>
+          <td>{{ asset.description }}</td>
+          <td>{{ asset.category }}</td>
+          <td>
+            <a href="{% url 'edit_asset' asset.id %}" class="btn btn-warning btn-sm">Edit</a>
+            <a href="{% url 'delete_asset' asset.id %}"
+               class="btn btn-danger btn-sm"
+               onclick="return confirm('Are you sure you want to delete this asset?');">
+               Delete
+            </a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+    </table>
+</div>
+{% else %}
+<h1>No assets available</h1>
+{% endif %}
+
+<br><br><br><br><br><br><br><br><br>
+    {% include "assets/footer.html" %}
+  </body>
+</html>

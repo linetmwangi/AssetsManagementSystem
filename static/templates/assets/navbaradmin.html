@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Asset Management System</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<style type="text/css">
+    .bs-example {
+        margin: 0px;
+    }
+    .navbar-brand {
+        font-size: 20px;
+        font-family: sans-serif;
+    }
+</style>
+</head>
+<body>
+
+<div class="bs-example">
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark fixed-top">
+        <a href="/Assetmanagement/Assets/static" class="navbar-brand">AMS</a>
+        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+            <div class="navbar-nav">
+            </div>
+
+            <div class="navbar-nav">
+              <a href="/Assetmanagement/Assets/static" class="nav-item nav-link active">Home</a>
+
+                <!-- Asset dropdown button -->
+                <div class="nav-item dropdown">
+                  <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Asset</a>
+                  <div class="dropdown-menu">
+                    <a href="addasset" class="dropdown-item">Add Asset</a>
+                    <a href="viewasset" class="dropdown-item">View Assets</a>
+                  </div>
+                </div>
+
+                <!-- Issue Asset dropdown button -->
+                <div class="nav-item dropdown">
+                  <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Issue Asset</a>
+                  <div class="dropdown-menu">
+                    <a href="issueasset" class="dropdown-item">Issue New Asset</a>
+                    <a href="viewissuedasset" class="dropdown-item">View Issued Assets</a>
+                  </div>
+                </div>
+
+                <!-- Staff dropdown button -->
+                <div class="nav-item dropdown">
+                  <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Staff</a>
+                  <div class="dropdown-menu">
+                    <a href="viewstaff" class="dropdown-item">View Staff</a>
+                  </div>
+                </div>
+
+                <a href="logout" class="nav-item nav-link">LOGOUT</a> &nbsp
+            </div>
+        </div>
+    </nav>
+</div>
+
+</body>
+</html>
