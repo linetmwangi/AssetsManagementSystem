@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Edit Staff</title>
+    <title>Delete Confirmation</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -53,9 +53,6 @@
         font-weight: normal;
         font-size: 13px;
       }
-      .signup-form input[type="checkbox"] {
-        margin-top: 2px;
-      }
       .signup-form .btn {
         font-size: 16px;
         font-weight: bold;
@@ -85,34 +82,23 @@
   </head>
   <body style="background-color:#b6bde7;">
     {% include "assets/navbaradmin.html" %}
-    <br><br>
+    <br>
+    <br>
     <div class="signup-form">
-      <form method="post" class="form-horizontal">
-        <center><h2>Edit Staff</h2></center>
-
-        {% csrf_token %}
-
-
-        <!-- Form fields to edit the staff -->
-        {% for field in form %}
-        <div class="form-group text-center">
-          <label class="control-label col-xs-4">{{ field.label_tag }}</label>
-          <div class="col-xs-8">
-            {{ field }}
-          </div>
-        </div>
-        {% endfor %}
-
-        <div class="form-group text-center">
-          <div class="col-xs-8 col-xs-offset-4">
-            <button type="submit" class="btn btn-primary btn-lg" style="border-radius: 0%;">Save Changes</button>
-          </div>
-        </div>
-      </form>
-    {% for s in staff %}
-      <div class="text-center">Return to Staff List <a href="{% url 'Assets:viewstaff' s.id %}">Click here</a></div>
+        <form method="post" class="form-horizontal">
+            <center><h2>Confirm Delete</h2></center>
+            <p class="text-center" style="color: #333; font-size: 16px;">
+              Are you sure you want to delete the staff: <strong>{{ staff.name }}</strong>?
+            </p>
+            {% csrf_token %}
+            <div class="form-group text-center">
+                <div class="col-xs-8 col-xs-offset-4">
+                    <button type="submit" class="btn btn-danger btn-lg" style="border-radius: 0%;">Delete</button>
+                    <a href="{% url 'Assets:viewstaff' %}" class="btn btn-secondary btn-lg" style="border-radius: 0%;">Cancel</a>
+                </div>
+            </div>
+        </form>
     </div>
-    {% endfor %}
 
   </body>
 </html>

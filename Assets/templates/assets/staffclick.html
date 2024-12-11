@@ -11,19 +11,44 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
     <title>Assets Management System Django</title>
+
     <style media="screen">
-    .jumbotron{
-      margin-bottom: 0px;
-    }
-    .jumbotron h1{
-      text-align: center;
-    }
+      .jumbotron {
+        margin-bottom: 0px;
+      }
+      .jumbotron h1 {
+        text-align: center;
+        font-size: 3rem;
+        font-weight: bold;
+        color: #007bff;
+      }
+      .jumbotron p {
+        font-size: 1.25rem;
+        color: #333;
+        text-align: center;
+      }
+      .jumbotron .lead {
+        font-size: 1.2rem;
+        color: #333;
+        text-align: center;
+      }
+      .jumbotron hr {
+        border-top: 2px solid #ddd;
+      }
+
+      .btn-lg {
+        font-size: 1.1rem;
+        padding: 15px 30px;
+        border-radius: 5px;
+        margin: 10px;
+      }
     </style>
 
   </head>
   <body>
       {% include "assets/navbar.html" %}
-<br><br>
+      <br><br>
+
       <div class="jumbotron">
         <h1 class="display-4">Hello, Staff</h1>
         <p class="lead">Welcome to The Asset Management System.</p>
@@ -35,7 +60,5 @@
         </p>
       </div>
 
-
-      {% include "assets/footer.html" %}
   </body>
 </html>

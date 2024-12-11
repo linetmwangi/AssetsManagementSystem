@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Edit Staff</title>
+    <title>Edit Issued Asset</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -85,15 +85,16 @@
   </head>
   <body style="background-color:#b6bde7;">
     {% include "assets/navbaradmin.html" %}
-    <br><br>
+    <br>
+    <br>
     <div class="signup-form">
       <form method="post" class="form-horizontal">
-        <center><h2>Edit Staff</h2></center>
+        <center><h2>Edit Issued Asset</h2></center>
 
         {% csrf_token %}
 
 
-        <!-- Form fields to edit the staff -->
+        <!-- Form fields to edit the asset -->
         {% for field in form %}
         <div class="form-group text-center">
           <label class="control-label col-xs-4">{{ field.label_tag }}</label>
@@ -109,10 +110,10 @@
           </div>
         </div>
       </form>
-    {% for s in staff %}
-      <div class="text-center">Return to Staff List <a href="{% url 'Assets:viewstaff' s.id %}">Click here</a></div>
+
+      <!-- Return to the Issued Assets List -->
+      <div class="text-center">Return to Issued Assets List <a href="{% url 'Assets:viewissuedasset'  %}">Click here</a></div>
     </div>
-    {% endfor %}
 
   </body>
 </html>

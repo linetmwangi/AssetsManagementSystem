@@ -41,7 +41,7 @@ table.redTable tfoot {
 font-size: 13px;
 font-weight: bold;
 color: #FFFFFF;
-background: #A40808;
+background: #a40815;
 }
 table.redTable tfoot td {
 font-size: 13px;
@@ -52,7 +52,7 @@ text-align: right;
 table.redTable tfoot .links a{
 display: inline-block;
 background: #FFFFFF;
-color: #A40808;
+color: #0fabdb;
 padding: 2px 8px;
 border-radius: 5px;
 }
@@ -61,12 +61,12 @@ border-radius: 5px;
   </head>
   <body>
   {% include "assets/navbarstaff.html" %}<br><br>
-  <h3 class="p-3 mb-2 bg-danger text-white" style = 'font-size: 50px;text-align:center;'>Asset Issued To You</h3>
+  <h3 class="p-3 mb-2 bg-success text-white" style = 'font-size: 50px;text-align:center;'>Asset Issued To You</h3>
 
 <div class="row">
 
   <div class="col-lg-6" style="padding-right:0px;">
-    {% if li1%}
+    {% if staff%}
     <table class="table table-hover table-condensed table-striped table-bordered">
   <thead>
   <tr>
@@ -85,13 +85,13 @@ border-radius: 5px;
   </tr>
   </tfoot>
   <tbody>
-    {% for t in li1 %}
+    {% for staff in staff %}
 <tr>
-  <td>  {{t.0}}</td>
-  <td>  {{t.1}}</td>
-  <td>  {{t.2}}</td>
-  <td>  {{t.3}}</td>
-  <td>  {{t.4}}</td>
+  <td>  {{0}}</td>
+  <td>  {{1}}</td>
+  <td>  {{2}}</td>
+  <td>  {{3}}</td>
+  <td>  {{4}}</td>
 </tr>
 
     {% endfor %}
@@ -103,11 +103,6 @@ border-radius: 5px;
 <div class="col-lg-6" style="padding-left:0px;">
 
       <table class="table table-hover table-condensed table-striped table-bordered">
-    <thead>
-    <tr>
-    <th>Issue Date</th>
-    </tr>
-    </thead>
     <tfoot>
     <tr>
     <td colspan="5">
@@ -116,7 +111,7 @@ border-radius: 5px;
     </tr>
     </tfoot>
     <tbody>
-      {% for t in li2 %}
+      {% for staff in staff %}
 <tr>
   <td>  {{t.0}}</td>
 </tr>
@@ -134,12 +129,8 @@ border-radius: 5px;
 </div></div>
 
 
-
-
-
-
 <br><br><br><br><br><br>
 <br><br><br>
-  {% include "assets/footer.html" %}
+
   </body>
 </html>

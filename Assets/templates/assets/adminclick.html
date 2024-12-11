@@ -10,29 +10,53 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-  <style media="screen">
-  .jumbotron{
-    margin-bottom: 0px;
-  }
-  .jumbotron h1{
-    text-align: center;
-  }
-  </style>
+    <style media="screen">
+      .jumbotron{
+        margin-bottom: 0px;
+      }
+      .jumbotron h1{
+        text-align: center;
+        font-size: 3rem;
+        font-weight: bold;
+        color: #007bff;
+      }
+      .jumbotron p{
+        font-size: 1.25rem;
+        color: #333;
+        text-align: center;
+      }
+      .jumbotron .lead {
+        font-size: 1.2rem;
+        color: #333;
+        text-align: center;
+      }
+      .jumbotron hr {
+        border-top: 2px solid #ddd;
+      }
+
+      .btn-lg {
+        font-size: 1.1rem;
+        padding: 15px 30px;
+        border-radius: 5px;
+        margin: 10px;
+      }
+    </style>
   </head>
   <body>
-  {% include "assets/navbar.html" %}
-<br><br>
-  <div class="jumbotron">
-    <h1 class="display-4">Hello, Admin</h1>
-    <p class="lead">Welcome to Assets Management System.</p>
-    <hr class="my-4">
-    <p>You can access various features after Login/SignUp.</p>
-    <p class="lead">
-      <a class="btn btn-primary btn-lg" style="border-radius:0px;" href="adminsignup" role="button">SignUp</a>
-      <a class="btn btn-primary btn-lg" style="border-radius:0px;" href="adminlogin" role="button">Login</a>
-    </p>
-  </div>
+    {% include "assets/navbar.html" %}
+    <br><br>
 
-    {% include "assets/footer.html" %}
+    <!-- Jumbotron Section -->
+    <div class="jumbotron">
+      <h1 class="display-4">Hello, Admin</h1>
+      <p class="lead">Welcome to the Assets Management System.</p>
+      <hr class="my-4">
+      <p>You can access various features after Login/SignUp.</p>
+      <p class="lead">
+        <a class="btn btn-primary btn-lg" style="border-radius:0px;" href="adminsignup" role="button">SignUp</a>
+        <a class="btn btn-primary btn-lg" style="border-radius:0px;" href="adminlogin" role="button">Login</a>
+      </p>
+    </div>
+
   </body>
 </html>

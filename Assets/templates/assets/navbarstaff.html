@@ -2,55 +2,66 @@
 {% load static %}
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Aseet Management System Django</title>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Asset Management System Django</title>
 
-<style type="text/css">
-    .bs-example{
-        margin: 0px;
+  <!-- Bootstrap 4 and other dependencies -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+  <style type="text/css">
+    .navbar-brand {
+      font-size: 20px;
+      font-family: sans-serif;
     }
-.navbar-brand{
-  font-size: 20px;
-  font-family: sans-serif;
-}
-</style>
+
+    /* Optional styling */
+    .bs-example {
+      margin-top: 80px; /* Space for fixed navbar */
+    }
+  </style>
 </head>
 <body>
 
+<!-- Navbar -->
 <div class="bs-example">
-    <nav class="navbar navbar-expand-md bg-dark navbar-dark fixed-top">
-        <a href="/Assetmanagement/Assets/static" class="navbar-brand">AMS</a>
-        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{% url 'Assets:dashboard' %}">AMS</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link active" href="{% url 'Assets:dashboard' %}">Home</a>
+          </li>
 
-        <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-            <div class="navbar-nav">
+          <!-- Issued Asset Dropdown -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="issuedAssetDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Issued Asset</a>
+            <ul class="dropdown-menu" aria-labelledby="issuedAssetDropdown">
+              <li><a class="dropdown-item" href="{% url 'Assets:viewissuedassetbystaff' %}">View Issued Asset</a></li>
+            </ul>
+          </li>
 
-            </div>
-
-            <div class="navbar-nav">
-                <a href="/Assetmanagement/Assets/static" class="nav-item nav-link active">Home</a>
-                <!--for issued asset dropdown button-->
-                <div class="nav-item dropdown">
-                  <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Issued Asset</a>
-                  <div class="dropdown-menu">
-                    <a href="viewissuedassetbystaff" class="dropdown-item">View Issued Asset</a>
-                  </div>
-                </div>
-                <a href="logout" class="nav-item nav-link">LOGOUT</a> &nbsp
-            </div>
-
-        </div>
-    </nav>
+          <!-- Logout Link -->
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'Assets:logout' %}">LOGOUT</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 </div>
 
+<!-- Include Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
+
