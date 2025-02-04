@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Asset Management System</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+</head>
+<body style="background-color:#b6bde7;">
+    {% include "Assets/navbaradmin.html" %}
+    <br><br>
+
+    <div class="signup-form">
+        <form method="post" class="form-horizontal">
+            <center><h2>Add Staff Member</h2></center>
+
+            {% csrf_token %}
+
+            <!-- Display errors -->
+            {% if user_form.errors %}
+                <div class="alert alert-danger">
+                    <ul>
+                        {% for field in user_form %}
+                            {% for error in field.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
+            <!-- User Form Fields -->
+            {% for field in user_form %}
+            <div class="form-group text-center">
+                <label class="control-label col-xs-4">{{ field.label }}</label>
+                <div class="col-xs-8">
+                    {{ field }}
+                </div>
+            </div>
+            {% endfor %}
+
+            <!-- Display errors for staff form -->
+            {% if staff_form.errors %}
+                <div class="alert alert-danger">
+                    <ul>
+                        {% for field in staff_form %}
+                            {% for error in field.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
+            {% for field in staff_form %}
+            <div class="form-group text-center">
+                <label class="control-label col-xs-4">{{ field.label }}</label>
+                <div class="col-xs-8">
+                    {{ field }}
+                </div>
+            </div>
+            {% endfor %}
+
+            <!-- Submit Button -->
+            <div class="form-group text-center">
+                <div class="col-xs-8 col-xs-offset-4">
+                    <button type="submit" class="btn btn-info btn-lg" style="border-radius: 0%;">Add Staff</button>
+                </div>
+            </div>
+        </form>
+
+        <!-- Link to View Staff List -->
+        <div class="text-center">View Staff Members <a href="{% url 'Assets:viewstaff' %}">Click here</a></div>
+    </div>
+</body>
+</html>

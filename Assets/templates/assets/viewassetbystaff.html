@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<style media="screen">
+table.blueTable {
+    border: 2px solid #607d8b;
+    background-color: #EEE7DB;
+    width: 100%;
+    text-align: center;
+    border-collapse: collapse;
+}
+table.blueTable td, table.blueTable th {
+    border: 1px solid #AAAAAA;
+    padding: 3px 2px;
+}
+table.blueTable tbody td {
+    font-size: 13px;
+}
+table.blueTable tr:nth-child(even) {
+    background: #ffffff;
+}
+table.blueTable thead {
+    background: #607d8b;
+}
+table.blueTable thead th {
+    font-size: 19px;
+    font-weight: bold;
+    color: #FFFFFF;
+    text-align: center;
+    border-left: 2px solid #607d8b;
+}
+table.blueTable thead th:first-child {
+    border-left: none;
+}
+
+table.blueTable tfoot {
+    font-size: 13px;
+    font-weight: bold;
+    color: #FFFFFF;
+    background: #607d8b;
+}
+table.blueTable tfoot td {
+    font-size: 13px;
+}
+table.blueTable tfoot .links {
+    text-align: right;
+}
+table.blueTable tfoot .links a {
+    display: inline-block;
+    background: #FFFFFF;
+    color: #607d8b;
+    padding: 2px 8px;
+    border-radius: 5px;
+}
+</style>
+
+</head>
+<body>
+    {% include "assets/navbarstaff.html" %}
+    <br><br>
+
+    <!-- Display Django messages -->
+    {% if messages %}
+    <div class="container">
+        {% for message in messages %}
+        <div class="alert alert-{% if message.tags %}{{ message.tags }}{% else %}info{% endif %}" role="alert">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <h3 class="p-3 mb-2 bg-info text-white" style='font-size: 30px;text-align:center;'>Available Assets</h3>
+
+    {% if assets %}
+    <div class="container">
+        <table class="table table-hover table-condensed table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Asset Name</th>
+                    <th>Identifier</th>
+                    <th>Description</th>
+                    <th>Category</th>
+                    <th>Condition</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for asset in assets %}
+                <tr>
+                    <td>{{ asset.name }}</td>
+                    <td>{{ asset.identifier }}</td>
+                    <td>{{ asset.description }}</td>
+                    <td>{{ asset.category }}</td>
+                    <td>{{ asset.condition }}</td>
+                    <td>
+                        {% if asset.available %}
+                        <a href="{% url 'Assets:request_asset' asset.id %}" class="btn btn-primary btn-sm">Request</a>
+                        {% else %}
+                        <button class="btn btn-info btn-sm" disabled>Requested</button>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% else %}
+    <h1>No assets available</h1>
+    {% endif %}
+
+    <br><br><br><br><br><br><br><br><br>
+</body>
+</html>

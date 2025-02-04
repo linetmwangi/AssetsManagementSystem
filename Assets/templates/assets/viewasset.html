@@ -1,56 +1,56 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-  <head>
+
 <style media="screen">
-table.redTable {
-border: 2px solid #607d8b;
-background-color: #EEE7DB;
-width: 100%;
-text-align: center;
-border-collapse: collapse;
+table.blueTable {
+    border: 2px solid #607d8b;
+    background-color: #EEE7DB;
+    width: 100%;
+    text-align: center;
+    border-collapse: collapse;
 }
-table.redTable td, table.redTable th {
-border: 1px solid #AAAAAA;
-padding: 3px 2px;
+table.blueTable td, table.blueTable th {
+    border: 1px solid #AAAAAA;
+    padding: 3px 2px;
 }
-table.redTable tbody td {
-font-size: 13px;
+table.blueTable tbody td {
+    font-size: 13px;
 }
-table.redTable tr:nth-child(even) {
-background: #ffffff;
+table.blueTable tr:nth-child(even) {
+    background: #ffffff;
 }
-table.redTable thead {
-background: #607d8b;
+table.blueTable thead {
+    background: #607d8b;
 }
-table.redTable thead th {
-font-size: 19px;
-font-weight: bold;
-color: #FFFFFF;
-text-align: center;
-border-left: 2px solid #607d8b;
+table.blueTable thead th {
+    font-size: 19px;
+    font-weight: bold;
+    color: #FFFFFF;
+    text-align: center;
+    border-left: 2px solid #607d8b;
 }
-table.redTable thead th:first-child {
-border-left: none;
+table.blueTable thead th:first-child {
+    border-left: none;
 }
 
-table.redTable tfoot {
-font-size: 13px;
-font-weight: bold;
-color: #FFFFFF;
-background: #607d8b;
+table.blueTable tfoot {
+    font-size: 13px;
+    font-weight: bold;
+    color: #FFFFFF;
+    background: #607d8b;
 }
-table.redTable tfoot td {
-font-size: 13px;
+table.blueTable tfoot td {
+    font-size: 13px;
 }
-table.redTable tfoot .links {
-text-align: right;
+table.blueTable tfoot .links {
+    text-align: right;
 }
-table.redTable tfoot .links a {
-display: inline-block;
-background: #FFFFFF;
-color: #607d8b;
-padding: 2px 8px;
-border-radius: 5px;
+table.blueTable tfoot .links a {
+    display: inline-block;
+    background: #FFFFFF;
+    color: #607d8b;
+    padding: 2px 8px;
+    border-radius: 5px;
 }
 </style>
   </head>
@@ -58,46 +58,84 @@ border-radius: 5px;
     {% include "assets/navbaradmin.html" %}
     <br>
     <br>
-    <h3 class="p-3 mb-2 bg-success text-white" style='font-size: 30px;text-align:center;'>Available Assets</h3>
-{% if assets %}
+
+    {% if messages %}
+    <div class="container">
+        {% for message in messages %}
+        <div class="alert alert-{% if message.tags %}{{ message.tags }}{% else %}info{% endif %}" role="alert">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+<h3 class="p-3 mb-2 bg-info text-white" style="font-size: 30px;text-align:center;">Available Assets</h3>
+
+{% if available_assets %}
 <div class="container">
   <table class="table table-hover table-condensed table-striped table-bordered">
     <thead>
-    <tr>
-    <th>Asset Name</th>
-    <th>Identifier</th>
-    <th>Description</th>
-    <th>Category</th>
-    <th>Condition</th>
-    </tr>
+      <tr>
+        <th>Asset Name</th>
+        <th>Identifier</th>
+        <th>Description</th>
+        <th>Category</th>
+        <th>Condition</th>
+      </tr>
     </thead>
-    <tfoot>
-    <tr>
-    <td colspan="5" rowspan="4">
-    <div class="links"></div>
-    </td>
-    </tr>
-    </tfoot>
     <tbody>
-      {% for asset in assets %}
+      {% for asset in available_assets %}
         <tr>
           <td>{{ asset.name }}</td>
           <td>{{ asset.identifier }}</td>
           <td>{{ asset.description }}</td>
           <td>{{ asset.category }}</td>
-          <td>{{ asset.condition}}</td>
+          <td>{{ asset.condition }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<h3 class="p-3 mb-2 bg-info text-white" style="font-size: 20px;text-align:center;">
+    No assets available.
+</h3>
+{% endif %}
+
+<!-- Requested Assets Section -->
+<h3 class="p-3 mb-2 bg-info text-dark" style="font-size: 25px;text-align:center;">Requested Assets</h3>
+
+{% if requested_assets %}
+<div class="container">
+  <table class="table table-hover table-condensed table-striped table-bordered">
+    <thead>
+      <tr>
+        <th>Asset Name</th>
+        <th>Requested By</th>
+        <th>Requested At</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for asset in requested_assets %}
+        <tr>
+          <td>{{ asset.name }}</td>
+          <td>{{ asset.requested_by.username }}</td>
+          <td>{{ asset.requested_at }}</td>
           <td>
-            <a href="{% url 'Assets:edit_asset' asset.id %}" class="btn btn-warning btn-sm">Edit</a>
-            </a>
+            <a href="{% url 'Assets:issue_asset' %}" class="btn btn-info btn-sm">Issue Asset</a>
+              
           </td>
         </tr>
       {% endfor %}
     </tbody>
-    </table>
+  </table>
 </div>
 {% else %}
-<h1>No assets available</h1>
+<h3 class="p-3 mb-2 bg-info text-white" style="font-size: 20px;text-align:center;">
+    No assets have been requested.
+</h3>
 {% endif %}
+
 
 <br><br><br><br><br><br><br><br><br>
   </body>

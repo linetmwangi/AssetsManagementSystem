@@ -43,8 +43,9 @@
 
           <!-- Issued Asset Dropdown -->
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="issuedAssetDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Issued Asset</a>
+            <a class="nav-link dropdown-toggle" href="#" id="issuedAssetDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Assets</a>
             <ul class="dropdown-menu" aria-labelledby="issuedAssetDropdown">
+              <li><a class="dropdown-item" href="{% url 'Assets:viewassetbystaff' %}">View Assets</a></li>
               <li><a class="dropdown-item" href="{% url 'Assets:viewissuedassetbystaff' %}">View Issued Asset</a></li>
             </ul>
           </li>

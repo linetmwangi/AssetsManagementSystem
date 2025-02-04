@@ -10,36 +10,17 @@
     {% include "assets/navbaradmin.html" %}
 
     <div class="container mt-5">
-        <h3 class="p-3 mb-2 bg-success text-white" style="text-align:center;">View Issued Assets</h3>
+        <h3 class="p-3 mb-2 bg-info text-white" style="text-align:center;">View Issued Assets</h3>
 
-        <!-- Form to filter/view issued assets -->
-        <form method="GET">
-            <div class="form-row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="enrollment">Staff Enrollment</label>
-                        {{ form.enrollment }}
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="identifier">Asset Identifier</label>
-                        {{ form.asset_identifier }}
-                    </div>
-                </div>
-            </div>
-            <button type="submit" class="btn btn-primary">Filter</button>
-        </form>
 
         <!-- Displaying issued assets -->
         <div class="mt-4">
             <table class="table table-hover table-condensed table-striped table-bordered">
                 <thead>
                     <tr>
-                        <th>Staff Name</th>
                         <th>Staff Enrollment</th>
                         <th>Asset Identifier</th>
-                        <th>Asset Category</th>
+                        <th>Asset Condition</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -51,14 +32,13 @@
                     </tr>
                 </tfoot>
                 <tbody>
-                    {% for issuedasset in issued_assets %}
+                    {% for issuedasset in issuedassets %}
                         <tr>
-                            <td>{{ issuedasset.name }}</td>
                             <td>{{ issuedasset.enrollment }}</td>
                             <td>{{ issuedasset.identifier }}</td>
-                            <td>{{ issuedasset.category }}</td>
+                            <td>{{ issuedasset.condition }}</td>
                             <td>
-                                <a href="{% url 'Assets:edit_issued_asset' issuedasset.id %}" class="btn btn-warning btn-sm">Edit</a>
+                                <a href="{% url 'Assets:edit_issued_asset' issuedasset.id %}" class="btn btn-info btn-sm">Edit</a>
                                 <a href="{% url 'Assets:delete_issued_asset' issuedasset.id %}" class="btn btn-danger btn-sm">Delete</a>
                             </td>
                         </tr>
@@ -67,9 +47,6 @@
             </table>
         </div>
 
-        {% if not issued_assets %}
-            <p style="text-align: center;">No issued assets found.</p>
-        {% endif %}
     </div>
 
 </body>

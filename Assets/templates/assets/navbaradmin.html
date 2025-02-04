@@ -54,7 +54,7 @@
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="issueAssetDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Issue Asset</a>
             <ul class="dropdown-menu" aria-labelledby="issueAssetDropdown">
-              <li><a class="dropdown-item" href="{% url 'Assets:issueasset' %}">Issue New Asset</a></li>
+              <li><a class="dropdown-item" href="{% url 'Assets:issue_asset'  %}">Issue New Asset</a></li>
               <li><a class="dropdown-item" href="{% url 'Assets:viewissuedasset' %}">View Issued Assets</a></li>
             </ul>
           </li>
@@ -63,6 +63,7 @@
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="staffDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Staff</a>
             <ul class="dropdown-menu" aria-labelledby="staffDropdown">
+              <li><a class="dropdown-item" href="{% url 'Assets:addstaff' %}">Add Staff</a></li>
               <li><a class="dropdown-item" href="{% url 'Assets:viewstaff' %}">View Staff</a></li>
             </ul>
           </li>

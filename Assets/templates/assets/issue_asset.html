@@ -3,19 +3,18 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>AMS Django</title>
+    <title>LMS Django</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 
 
     <style type="text/css">
     	body {
     		color: #aa082e;
-    			background-color:#b6bde7;
+    		background: #c5acb0;
     		font-family: 'Roboto', sans-serif;
     	}
         .form-control {
@@ -87,31 +86,20 @@
     	}
     </style>
 
-
-
   </head>
-  <body>
-    {% include "assets/navbar.html" %}
-    <br>
-    <br>
-<center><h3 style=" margin-bottom: 0px;"class = 'alert alert-success'>Signup As Staff!</h3></center>
+  <body style="background-color:#b6bde7;">
+    {% include "assets/navbaradmin.html" %}
+    <br> <br>
+
     <div class="signup-form">
         <form  method="post" class="form-horizontal">
 
-    			<center><h2>Staff Signup</h2></center>
+    			<center><h2>ISSUE ASSET TO STAFF</h2></center>
 
-{% csrf_token %}
+		{% csrf_token %}
 
-            {% for field in form1 %}
-            <div class="form-group text-center">
-              <label class="control-label col-xs-4">{{ field.label_tag }}</label>
-              <div class="col-xs-8">
-              {{ field }}
-               </div>
-            </div>
-            {% endfor %}
-            {% for field in form2 %}
-            <div class="form-group text-center">
+            {% for field in form %}
+            <div class="form-group">
               <label class="control-label col-xs-4">{{ field.label_tag }}</label>
               <div class="col-xs-8">
               {{ field }}
@@ -119,15 +107,15 @@
             </div>
             {% endfor %}
 
-    		<div class="form-group text-center">
+
+    		<div class="form-group">
     			<div class="col-xs-8 col-xs-offset-4">
-            <button type="submit" class="btn btn-primary btn-lg" style="border-radius: 0%;">Sign Up</button>
+            <button type="submit" class="btn btn-info btn-lg" style="border-radius: 0%;">ISSUE</button>
     			</div>
     		</div>
         </form>
-    	<div class="text-center">Already have an account? <a href="stafflogin">Login here</a></div>
+    	<div class="text-center">View Issued Asset To Staff  <a href="{% url 'Assets:viewissuedasset' %}">Click here</a></div>
     </div>
-
 
 
   </body>

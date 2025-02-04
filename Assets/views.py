@@ -1,15 +1,15 @@
 from django.contrib.auth import logout
+from django.contrib import messages
 from django.shortcuts import render
 from . import forms, models
-from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import get_object_or_404, redirect
 from .models import StaffExtra, Asset , IssuedAsset, CarouselImage
-from .forms import AssetForm, IssuedAssetForm, StaffExtraForm , CarouselImageForm
-
+from .forms import AssetForm, IssuedAssetForm, StaffExtraForm , CarouselImageForm , StaffUserForm
+from django.utils.timezone import now
 
 def is_admin(user):
-    return user.groups.filter(name='ADMIN').exists()
+    return user.groups.filter(name='ADMIN').exists() or user.is_staff
 
 # Home view
 def dashboard_view(request):
@@ -19,7 +19,7 @@ def dashboard_view(request):
     images = CarouselImage.objects.all()
 
     form = None
-    if request.method == 'POST' and request.user.is_admin:
+    if request.method == 'POST' and is_admin(request.user):  # Use is_admin()
         form = CarouselImageForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
@@ -29,8 +29,9 @@ def dashboard_view(request):
 
     return render(request, 'Assets/dashboard.html', {
         'images': images,
-        'form': form if request.user.is_staff else None,
+        'form': form if request.user.is_staff else None,  # Check is_staff properly
     })
+
 # For showing signup/login button for staff
 def staffclick_view(request):
     if request.user.is_authenticated:
@@ -43,61 +44,19 @@ def adminclick_view(request):
         return redirect('Assets:afterlogin')
     return render(request, 'Assets/adminclick.html')
 
-# Admin signup view
-def adminsignup_view(request):
-    form = forms.AdminSignupForm()
-    if request.method == 'POST':
-        form = forms.AdminSignupForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            user.set_password(user.password)
-            user.save()
-            my_admin_group = Group.objects.get_or_create(name='ADMIN')
-            my_admin_group[0].user_set.add(user)
-            return redirect('Assets:adminlogin')
-    return render(request, 'Assets/adminsignup.html', {'form': form})
 
-# Staff signup view
-from django.contrib.auth.models import Group
-from django.shortcuts import render, redirect
-from . import forms
-
-
-def staffsignup_view(request):
-    form1 = forms.StaffUserForm()
-    form2 = forms.StaffExtraForm()
-    mydict = {'form1': form1, 'form2': form2}
-
-    if request.method == 'POST':
-        form1 = forms.StaffUserForm(request.POST)
-        form2 = forms.StaffExtraForm(request.POST)
-
-        if form1.is_valid() and form2.is_valid():
-            user = form1.save()
-            user.set_password(user.password)
-            user.save()
-
-            f2 = form2.save(commit=False)
-            f2.user = user
-
-            if not f2.username:
-                f2.username = "default_username"
-            f2.save()
-
-            my_staff_group = Group.objects.get_or_create(name='STAFF')
-            my_staff_group[0].user_set.add(user)
-
-            return redirect('Assets:stafflogin')
-
-    return render(request, 'Assets/staffsignup.html', context=mydict)
-
-
-# After login view, redirect to the appropriate dashboard
 def afterlogin_view(request):
     if is_admin(request.user):
-        return render(request, 'Assets/adminafterlogin.html')
+        return render(request, 'Assets/adminafterlogin.html', {
+            'user': request.user  # Pass the user object to the template
+        })
+    elif StaffExtra.objects.filter(user=request.user).exists():
+        return render(request, 'Assets/staffafterlogin.html', {
+            'user': request.user  # Pass the user object to the template
+        })
     else:
-        return render(request, 'Assets/staffafterlogin.html')
+        return redirect('Assets:dashboard')
+
 
 def custom_logout_view(request):
     logout(request)
@@ -115,60 +74,115 @@ def addasset_view(request):
             return redirect('Assets:viewasset')
     return render(request, 'Assets/addasset.html', {'form': form})
 
-# View all assets for admin
 @login_required(login_url='Assets:adminlogin')
 @user_passes_test(is_admin)
 def viewasset_view(request):
-    assets = models.Asset.objects.all()
-    return render(request, 'Assets/viewasset.html', {'assets': assets})
+    available_assets = Asset.objects.filter(available=True)  # Fetch only available assets
+    requested_assets = Asset.objects.filter(available=False, requested_by__isnull=False)
 
-# Issue asset to a staff member
+    return render(request, 'Assets/viewasset.html', {
+        'available_assets': available_assets,
+        'requested_assets': requested_assets,
+    })
+
+@login_required(login_url='Assets:stafflogin')
+def viewassetbystaff(request):
+    assets = Asset.objects.filter(available=True)
+    return render(request, 'Assets/viewassetbystaff.html', {'assets': assets})
+
+
 @login_required(login_url='Assets:adminlogin')
 @user_passes_test(is_admin)
-def issueasset_view(request):
+def issue_asset_view(request):
     form = IssuedAssetForm()
+
     if request.method == 'POST':
         form = IssuedAssetForm(request.POST)
         if form.is_valid():
-            print(form.cleaned_data)
-            form.save()
+            issued_asset = form.save(commit=False)
+
+            issued_asset.identifier.available = False
+            issued_asset.identifier.save()
+
+            issued_asset.save()
             return redirect('Assets:viewissuedasset')
-    return render(request, 'Assets/issueasset.html', {'form': form})
+
+    return render(request, 'Assets/issue_asset.html', {'form': form})
+
 
 @login_required(login_url='Assets:adminlogin')
 @user_passes_test(is_admin)
 def viewissuedasset(request):
-    issued_assets = IssuedAsset.objects.all()
+    issuedassets = IssuedAsset.objects.all()
     form = IssuedAssetForm(request.GET)
 
     if form.is_valid():
-        if form.cleaned_data['enrollment']:
-            issued_assets = issued_assets.filter(enrollment=form.cleaned_data['enrollment'])
-        if form.cleaned_data['asset_identifier']:
-            issued_assets = issued_assets.filter(identifier=form.cleaned_data['identifier'])
+        if form.cleaned_data.get('enrollment'):
+            issuedassets = issuedassets.filter(enrollment=form.cleaned_data['enrollment'])
 
-    return render(request, 'Assets/viewissuedasset.html', { 'issued_assets': issued_assets})
+        if form.cleaned_data.get('asset_identifier'):
+            issuedassets = issuedassets.filter(identifier=form.cleaned_data['identifier'])
+
+    return render(request, 'Assets/viewissuedasset.html', {'issuedassets': issuedassets})
 
 
-# View all staff members
-@login_required(login_url='Assets:adminlogin')
+@login_required(login_url='Assets:stafflogin')
+def viewissuedassetbystaff(request):
+    staff_extra = get_object_or_404(StaffExtra, user=request.user)
+    issuedassets = IssuedAsset.objects.filter(enrollment=staff_extra)
+
+    print(issuedassets)
+
+    return render(request, 'Assets/viewissuedassetbystaff.html', {
+        'issuedassets': issuedassets,
+        'staff_extra': staff_extra,
+    })
+
+
+@user_passes_test(is_admin)
+def addstaff_view(request):
+    if request.method == 'POST':
+        user_form = StaffUserForm(request.POST)
+        staff_form = StaffExtraForm(request.POST)
+
+        if user_form.is_valid() and staff_form.is_valid():
+            # Save the user and staff details
+            user = user_form.save(commit=False)
+            user.is_staff = True
+            user.is_superuser = False
+            user.set_password(user_form.cleaned_data['password'])
+            user.save()
+
+            staff = staff_form.save(commit=False)
+            staff.user = user
+            staff.save()
+
+            return redirect('Assets:viewstaff')
+    else:
+        user_form = StaffUserForm()
+        staff_form = StaffExtraForm()
+
+    return render(request, 'Assets/addstaff.html', {
+        'user_form': user_form,
+        'staff_form': staff_form,
+    })
+
+@user_passes_test(is_admin)
+def viewstaff_view(request):
+    staff = models.StaffExtra.objects.all()
+    staff_with_names = [(staff_member, staff_member.get_name()) for staff_member in staff]
+
+    return render(request, 'Assets/viewstaff.html', {'staff_with_names': staff_with_names})
+
 @user_passes_test(is_admin)
 def viewstaff_view(request):
     staff = models.StaffExtra.objects.all()
     return render(request, 'Assets/viewstaff.html', {'staff': staff})
 
-# View issued assets by staff
-@login_required(login_url='Assets:stafflogin')
-def viewissuedassetbystaff(request):
-    staff = models.StaffExtra.objects.filter(user_id=request.user.id).first()
-
-    return render(request, 'Assets/viewissuedassetbystaff.html', {'staff':staff})
-
-# About us view
 def aboutus_view(request):
     return render(request, 'assets/aboutus.html')
 
-
+@user_passes_test(is_admin)
 def edit_staff_view(request, id):
     staff = get_object_or_404(StaffExtra, id=id)
     if request.method == 'POST':
@@ -181,7 +195,7 @@ def edit_staff_view(request, id):
 
     return render(request, 'Assets/edit_staff.html', {'form': form})
 
-
+@user_passes_test(is_admin)
 def delete_staff_view(request, id):
     staff = get_object_or_404(StaffExtra, id=id)
 
@@ -220,13 +234,39 @@ def edit_issued_asset_view(request, id):
 
     return render(request, 'Assets/editissuedasset.html', {'form': form, 'asset': asset})
 
-
 def delete_issued_asset_view(request, id):
-    asset = get_object_or_404(IssuedAsset, id=id)
+    issued_asset = get_object_or_404(IssuedAsset, id=id)  # Get issued asset record
 
     if request.method == 'POST':
-        asset.delete()
+        # Retrieve the associated asset and mark it as available again
+        asset = issued_asset.identifier
+        asset.available = True  # Make asset available
+        asset.requested_by = None  # Clear requester
+        asset.requested_at = None  # Clear request time
+        asset.save()
+
+        issued_asset.delete()  # Delete the issued asset record
+
+        messages.success(request, f'Issued asset "{asset.name}" has been deleted and is now available.')
+
         return redirect('Assets:viewissuedasset')
 
-    return render(request, 'Assets/confirmdeleteissuedasset.html', {'asset': asset})
+    return render(request, 'Assets/confirmdeleteissuedasset.html', {'asset': issued_asset})
 
+
+@login_required(login_url='Assets:stafflogin')
+def request_asset_view(request, id):
+    asset = get_object_or_404(Asset, id=id)
+
+    if asset.available:
+        asset.available = False
+        asset.requested_by = request.user  # Store requester
+        asset.requested_at = now()  # Store request time
+        asset.save()
+
+        messages.success(request, f'You have successfully requested "{asset.name}".')
+
+    else:
+        messages.error(request, f'Asset "{asset.name}" is already requested.')
+
+    return redirect('Assets:viewassetbystaff')

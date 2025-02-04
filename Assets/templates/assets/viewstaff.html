@@ -68,7 +68,7 @@ border-radius: 5px;
     {% include "assets/navbaradmin.html" %}
     <br>
     <br>
-    <h3 class="p-3 mb-2 bg-success text-white" style = 'font-size: 30px;text-align:center;'>Registered Staff</h3>
+    <h3 class="p-3 mb-2 bg-info text-white" style = 'font-size: 30px;text-align:center;'>Registered Staff</h3>
 
     {% if staff %}
 <div class="container">
@@ -91,15 +91,14 @@ border-radius: 5px;
     <tbody>
       {% for s in staff %}
         <tr>
-          <td>{{ s.get_name }}</td>
+          <td>{{ s.user.first_name }}</td>
           <td>{{ s.enrollment }}</td>
           <td>{{ s.department }}</td>
           <td>
             <!-- Edit Button -->
-              <a href="{% url 'Assets:edit_staff' s.id %}" class="btn btn-warning btn-sm">Edit</a>
+              <a href="{% url 'Assets:edit_staff' s.id %}" class="btn btn-info btn-sm">Edit</a>
             <!-- Delete Button -->
             <a href="{% url 'Assets:delete_staff' s.id %}" class="btn btn-danger btn-sm">Delete</a>
-</a>
 
           </td>
         </tr>
