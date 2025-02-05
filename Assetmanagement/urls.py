@@ -21,5 +21,5 @@ urlpatterns = [
 
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('', include(('Assets.urls', 'Assets'), namespace='Assets')),  # Added namespace
+    path('Assets/', include(('Assets.urls', 'Assets'), namespace='Assets')),  # Added namespace
 ]
