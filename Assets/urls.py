@@ -4,7 +4,7 @@ from .views import (
     dashboard_view, adminclick_view, staffclick_view,
     afterlogin_view, addasset_view, viewasset_view,
     issue_asset_view, viewissuedasset, viewstaff_view,
-    viewissuedassetbystaff, aboutus_view, custom_logout_view, edit_staff_view, edit_asset_view, edit_issued_asset_view,
+    viewissuedassetbystaff,  custom_logout_view, edit_staff_view, edit_asset_view, edit_issued_asset_view,
     delete_issued_asset_view, delete_staff_view, dashboard_view, addstaff_view, request_asset_view, viewassetbystaff
 )
 from django.conf import settings
