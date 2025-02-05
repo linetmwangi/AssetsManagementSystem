@@ -19,8 +19,8 @@ urlpatterns = [
     path('staffclick', staffclick_view, name='staffclick'),
 
     # Authentication
-    path('adminlogin', LoginView.as_view(template_name='assets/adminlogin.html'), name='adminlogin'),
-    path('stafflogin', LoginView.as_view(template_name='assets/stafflogin.html'), name='stafflogin'),
+    path('adminlogin', LoginView.as_view(template_name='Assets/adminlogin.html'), name='adminlogin'),
+    path('stafflogin', LoginView.as_view(template_name='Assets/stafflogin.html'), name='stafflogin'),
     path('logout', custom_logout_view, name='logout'),
     path('afterlogin', afterlogin_view, name='afterlogin'),
 

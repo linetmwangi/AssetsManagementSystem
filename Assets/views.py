@@ -77,7 +77,7 @@ def addasset_view(request):
 @login_required(login_url='Assets:adminlogin')
 @user_passes_test(is_admin)
 def viewasset_view(request):
-    available_assets = Asset.objects.filter(available=True)  # Fetch only available assets
+    available_assets = Asset.objects.filter(available=True)  # Fetch only available Assets
     requested_assets = Asset.objects.filter(available=False, requested_by__isnull=False)
 
     return render(request, 'Assets/viewasset.html', {
@@ -88,7 +88,7 @@ def viewasset_view(request):
 @login_required(login_url='Assets:stafflogin')
 def viewassetbystaff(request):
     assets = Asset.objects.filter(available=True)
-    return render(request, 'Assets/viewassetbystaff.html', {'assets': assets})
+    return render(request, 'Assets/viewassetbystaff.html', {'Assets': assets})
 
 
 @login_required(login_url='Assets:adminlogin')
@@ -178,9 +178,6 @@ def viewstaff_view(request):
 def viewstaff_view(request):
     staff = models.StaffExtra.objects.all()
     return render(request, 'Assets/viewstaff.html', {'staff': staff})
-
-def aboutus_view(request):
-    return render(request, 'assets/aboutus.html')
 
 @user_passes_test(is_admin)
 def edit_staff_view(request, id):
