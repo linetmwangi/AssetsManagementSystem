@@ -9,10 +9,10 @@ from .views import (
 )
 from django.conf import settings
 from django.conf.urls.static import static
-app_name = 'assets'
+app_name = 'Assets'
 
 urlpatterns = [
-    path('dashboard', dashboard_view, name='dashboard'),
+    path('', dashboard_view, name='dashboard'),
 
     # User Role Selection
     path('adminclick', adminclick_view, name='adminclick'),
