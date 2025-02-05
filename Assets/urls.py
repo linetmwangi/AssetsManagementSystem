@@ -12,7 +12,7 @@ from django.conf.urls.static import static
 app_name = 'assets'
 
 urlpatterns = [
-    path('dashboard', dashboard_view, name='dashboard'),
+    path('', dashboard_view, name='dashboard'),
 
     # User Role Selection
     path('adminclick', adminclick_view, name='adminclick'),
