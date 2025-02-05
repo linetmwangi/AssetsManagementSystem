@@ -5,7 +5,7 @@ from .views import (
     afterlogin_view, addasset_view, viewasset_view,
     issue_asset_view, viewissuedasset, viewstaff_view,
     viewissuedassetbystaff,  custom_logout_view, edit_staff_view, edit_asset_view, edit_issued_asset_view,
-    delete_issued_asset_view, delete_staff_view, dashboard_view, addstaff_view, request_asset_view, viewassetbystaff
+    delete_issued_asset_view, delete_staff_view,  addstaff_view, request_asset_view, viewassetbystaff
 )
 from django.conf import settings
 from django.conf.urls.static import static
@@ -38,9 +38,6 @@ urlpatterns = [
     path('edit_asset/<int:id>/, edit_asset_view/', edit_asset_view, name='edit_asset'),
     path('edit_issued_asset/<int:id>/', edit_issued_asset_view, name='edit_issued_asset'),
     path('delete_issued_asset/<int:id>/', delete_issued_asset_view, name='delete_issued_asset'),
-    path('request_asset/<int:id>/', request_asset_view, name='request_asset')
-,
-    # Static Pages
-    path('aboutus', aboutus_view, name='aboutus'),
+    path('request_asset/<int:id>/', request_asset_view, name='request_asset'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
